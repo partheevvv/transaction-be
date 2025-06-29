@@ -77,7 +77,7 @@ JWT_SECRET=your-secret-key
 
 > Use this token in all protected routes as:
 ```
-Authorization: Bearer <JWT_TOKEN_HERE>
+Authorization: <JWT_TOKEN_HERE>
 ```
 
 ---
@@ -98,7 +98,7 @@ Authorization: Bearer <JWT_TOKEN_HERE>
 
 #### 📥 Get All Transactions
 `GET /api/transactions`
-**Header:** `Authorization: Bearer <token>`
+**Header:** `Authorization: <token>`
 
 **Response:**
 ```json
@@ -121,7 +121,7 @@ Authorization: Bearer <JWT_TOKEN_HERE>
 
 #### 📈 Get Monthly Summary
 `GET /api/summary?month=6&year=2025`
-**Header:** `Authorization: Bearer <token>`
+**Header:** `Authorization: <token>`
 
 **Response:**
 ```json
