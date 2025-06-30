@@ -6,9 +6,13 @@ const { createTransaction, getTransaction, deleteTransaction, updateTransaction 
 
 const transactionValidators = [
     body("date").exists().withMessage("Date is required").withMessage("Date should be in YYYY-MM-DD format").toDate(),
+    
     body("description").exists().withMessage("Description required").trim().escape(),
+    
     body("amount").exists().withMessage("Amount required").isFloat().toFloat(),
+    
     body("category").exists().withMessage("Category required").trim().escape(),
+    
     body("type").exists().withMessage("Type required").isIn(["Income", "Expense"]).withMessage("Type must be either income or expense").trim().escape(),
 ];
 

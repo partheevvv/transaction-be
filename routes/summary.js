@@ -8,6 +8,7 @@ const summaryValidator = [
         min: 1,
         max: 12
     }).withMessage("Month should be between 1 and 12").toInt(),
+    
     query("year").optional().isInt({
         min: 2000
     }).withMessage("year must be a four-digit valid number").toInt()
