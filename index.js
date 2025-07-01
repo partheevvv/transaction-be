@@ -10,7 +10,29 @@ connectDB();
 
 const app = express();
 
-app.use(express.json());
+const allowedOrigins = process.env.CORS_ORIGIN.split(',');
+  
+const corsOptions = {
+
+    origin: (origin, callback) => {
+    
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS policy: No access from ${origin}`));
+        }
+    },
+
+    methods: ['GET','HEAD','POST','PUT','PATCH','DELETE'],
+    allowedHeaders: ['Content-Type','Authorization'],
+    credentials: true,       
+    optionsSuccessStatus: 200
+};
+
+
+app.use(express.json(corsOptions));
 app.use(cors());
 app.use(helmet());
 
@@ -25,14 +47,20 @@ app.use("/api/export", require("./routes/export"));
 
 app.use((err, req, res, next) => {
     
+    if (err.message.startsWith('CORS policy')) {
+        return res.status(403).json({ message: err.message });
+    }
+    
     console.error(err.stack);
     
     res.status(500).json({
         message: err.message
     })
-})
+});
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`)
+    console.log(`Server running on port ${PORT}`)
     }
 );
