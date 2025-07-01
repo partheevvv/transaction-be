@@ -16,6 +16,12 @@ const transactionValidators = [
     body("type").exists().withMessage("Type required").isIn(["Income", "Expense"]).withMessage("Type must be either income or expense").trim().escape(),
 ];
 
+const getTransactionValidator = [
+    query('month').optional().isInt({ min: 1, max: 12 }).withMessage('Month must be 1–12').toInt(),
+    
+    query('year').optional().isInt({ min: 2000 }).withMessage('Year must be a valid 4-digit year').toInt()
+]
+
 const checkValidation = (req, res, next) => {
     const error = validationResult(req);
     if(!error.isEmpty()) return res.status(400).json({
@@ -27,7 +33,7 @@ const checkValidation = (req, res, next) => {
 router.use(auth);
 
 router.post("/", transactionValidators, checkValidation, createTransaction);
-router.get("/", getTransaction);
+router.get("/", getTransactionValidator, checkValidation, getTransaction);
 router.delete("/:id", deleteTransaction);
 router.put("/:id", transactionValidators, checkValidation, updateTransaction);
 

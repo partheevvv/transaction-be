@@ -6,7 +6,7 @@ exports.exportCsv = async (req, res, next) => {
     
         const userId = req.user.id;
         
-        const txs = await Transaction.find({ 
+        const transactions = await Transaction.find({ 
             userId 
         }).sort({ 
             date: -1 
@@ -18,12 +18,12 @@ exports.exportCsv = async (req, res, next) => {
             fields 
         });
 
-        const csv = parser.parse(txs.map(tx => ({
-          date: tx.date.toISOString().split("T")[0],
-          description: tx.description,
-          amount: tx.amount,
-          category: tx.category,
-          type: tx.type
+        const csv = parser.parse(transactions.map(transaction => ({
+          date: transaction.date.toISOString().split("T")[0],
+          description: transaction.description,
+          amount: transaction.amount,
+          category: transaction.category,
+          type: transaction.type
         })));
       
         res.header('Content-Type', 'text/csv');

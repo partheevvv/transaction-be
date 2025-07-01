@@ -5,7 +5,7 @@ exports.getCategorySummary = async (req, res, next) => {
 
     try {
 
-        const userId = new mongoose.Types.ObjectId(req.user.id);
+        const userId = new mongoose.Types.ObjectId.createFromHexString(req.user.id);
         
         const month  = parseInt(req.query.month, 10) || (new Date()).getMonth() + 1;
         const year   = parseInt(req.query.year, 10)  || (new Date()).getFullYear();

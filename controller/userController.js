@@ -9,6 +9,7 @@ exports.getTheme = async(req, res, next) => {
         res.json({
             theme: user.themePreference
         })
+        
     } catch(e) {
         next(e);
     }
