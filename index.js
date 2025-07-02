@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require('./config/db');
+const morgan = require("morgan");
 const helmet = require("helmet");
 
 dotenv.config();
@@ -9,6 +10,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_EN !== "production") {
+    app.use(morgan(dev));
+}
 
 const allowedOrigins = process.env.CORS_ORIGIN.split(',');
   
